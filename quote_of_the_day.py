@@ -19,7 +19,7 @@ def get_quote_of_the_day(api_url="https://zenquotes.io/api/today"):
             return {"quote": quote_data.get("q"), "author": quote_data.get("a")}
         else:
             return {"error": "Unexpected API response format"}
-    except requests.exceptions.RequestException as e:
+    except Exception as e:  # Catch all exceptions since requests.exceptions is not available
         return {"error": str(e)}
 
 # Example usage

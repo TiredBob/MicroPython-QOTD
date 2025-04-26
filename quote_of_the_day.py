@@ -15,7 +15,10 @@ def get_quote_of_the_day(api_url="https://zenquotes.io/api/today"):
         response = requests.get(api_url)
         print(f"Status Code: {response.status_code}")  # Debugging: Print status code
         print(f"Response Content: {response.text}")    # Debugging: Print raw response content
-        response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+
+        # Check for HTTP errors manually
+        if response.status_code != 200:
+            return {"error": f"HTTP error {response.status_code}: {response.text}"}
 
         # Use MicroPython-compatible JSON parsing
         data = json.loads(response.text)

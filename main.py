@@ -38,3 +38,4 @@ try:
         scroll_text(lcd, "Hello, this is a scrolling text!", row=1, delay=0.2, repeat=True)
 except:
     pass
+

@@ -1,4 +1,5 @@
 import time
+import sys
 from machine import I2C, Pin
 from I2C_LCD import I2CLcd
 from quote_of_the_day import get_quote_of_the_day

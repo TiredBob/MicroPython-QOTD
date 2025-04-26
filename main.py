@@ -20,8 +20,11 @@ def lcd_scroller():
     while True:
         if scroll_queue:
             # Process the first item in the queue
-            text, row = scroll_queue.pop(0)
+            text, row, repeat = scroll_queue.pop(0)
             lcd.scroll_text(text, row=row, delay=0.3, repeat=False)
+            if repeat:
+                # Re-append the task to the end of the queue
+                scroll_queue.append((text, row, repeat))
         time.sleep(0.1)  # Prevent high CPU usage
 
 # Main program logic (Core 0)
@@ -53,13 +56,13 @@ def main_program():
 
             # Add scrolling tasks to the queue
             if len(author) > 16:
-                scroll_queue.append((author, 1))  # Author on line 1
+                scroll_queue.append((author, 1, True))  # Author on line 1
             else:
                 lcd.move_to(0, 1)
                 lcd.putstr(author)
 
             if len(quote) > 16:
-                scroll_queue.append((quote, 0))  # Quote on line 0
+                scroll_queue.append((quote, 0, True))  # Quote on line 0
             else:
                 lcd.move_to(0, 0)
                 lcd.putstr(quote)
